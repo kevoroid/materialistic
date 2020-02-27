@@ -3,9 +3,9 @@ package io.github.hidroh.materialistic;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.support.annotation.NonNull;
-import android.support.design.widget.TabLayout;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import com.google.android.material.tabs.TabLayout;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
@@ -103,7 +103,7 @@ public class UserActivityTest {
                 ((TabLayout) activity.findViewById(R.id.tab_layout)).getTabAt(0).getText());
         assertEquals(2, (((RecyclerView) activity.findViewById(R.id.recycler_view)).getAdapter())
                 .getItemCount());
-        shadowOf(activity).recreate();
+        activity.recreate();
         assertThat((TextView) activity.findViewById(R.id.title)).hasTextString("username (2,016)");
     }
 

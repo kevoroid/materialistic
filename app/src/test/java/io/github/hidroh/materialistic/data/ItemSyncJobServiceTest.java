@@ -25,7 +25,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import org.junit.After;
 import org.junit.Before;
@@ -37,6 +37,7 @@ import org.mockito.MockitoAnnotations;
 import org.robolectric.Robolectric;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.android.controller.ServiceController;
+import org.robolectric.shadows.ShadowJobScheduler;
 import org.robolectric.shadows.ShadowNetworkInfo;
 
 import java.util.List;
@@ -76,8 +77,9 @@ public class ItemSyncJobServiceTest {
                 .setActiveNetworkInfo(ShadowNetworkInfo.newInstance(null,
                         ConnectivityManager.TYPE_WIFI, 0, true, NetworkInfo.State.CONNECTED));
         new SyncScheduler().scheduleSync(RuntimeEnvironment.application, "1");
-        List<JobInfo> pendingJobs = shadowOf((JobScheduler) RuntimeEnvironment.application
-                .getSystemService(Context.JOB_SCHEDULER_SERVICE)).getAllPendingJobs();
+        List<JobInfo> pendingJobs = ((ShadowJobScheduler.ShadowJobSchedulerImpl)
+                shadowOf((JobScheduler) RuntimeEnvironment.application
+                .getSystemService(Context.JOB_SCHEDULER_SERVICE))).getAllPendingJobs();
         assertThat(pendingJobs).isNotEmpty();
         JobInfo actual = pendingJobs.get(0);
         assertThat(actual.getService().getClassName())

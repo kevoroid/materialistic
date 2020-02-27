@@ -1,9 +1,9 @@
 package io.github.hidroh.materialistic.preference;
 
 import android.content.Intent;
-import android.support.v7.preference.PreferenceGroupAdapter;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.preference.PreferenceGroupAdapter;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.widget.Spinner;
 
@@ -62,7 +62,7 @@ public class FontSizePreferenceTest {
                         .putExtra(PreferencesActivity.EXTRA_TITLE, R.string.display)
                         .putExtra(PreferencesActivity.EXTRA_PREFERENCES, R.xml.preferences_display));
         activity = controller.create().postCreate(null).start().resume().visible().get();
-        RecyclerView list = activity.findViewById(R.id.list);
+        RecyclerView list = activity.findViewById(android.R.id.list_container);
         list.setLayoutManager(new LinearLayoutManager(activity));
         RecyclerView.Adapter adapter = list.getAdapter();
         int position = ShadowSupportPreferenceManager
